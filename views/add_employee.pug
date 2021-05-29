@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  h1 Register Employee
+  form(method='Post', action='/employees/add')
+    #form-group
+      label Surname:
+      input.form-control(name='surname', type='text')
+    #form-group
+      label Second Surname:
+      input.form-control(name='second_surname', type='text')
+    #form-group
+      label first Name:
+      input.form-control(name='firstname', type='text')
+    #form-group
+      label Midle Name:
+      input.form-control(name='midlename', type='text')
+    #form-group
+      label Country:
+      input.form-control(name='country', type='text')
+    #form-group
+      label Id Type:
+      input.form-control(name='id_type', type='text')
+    #form-group
+      label Id Number:
+      input.form-control(name='id_number', type='text')
+    #form-group
+      label Email:
+      input.form-control(name='email', type='text')
+    #form-group
+      label Start Date:
+      input.form-control(name='start_date', type='text')
+    #form-group
+      label Area:
+      input.form-control(name='area', type='text')
+    #form-group
+      label Status:
+      input.form-control(name='status', type='text')
+    #form-group
+      label Register Date:
+      input.form-control(name='register_date', type='text')
+      
+    br
+    input.btn.btn-primary(type='submit',value='Submit')

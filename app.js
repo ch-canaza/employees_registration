@@ -1,17 +1,14 @@
 const express = require('express');
 const path = require('path');
-const validationResult = require('express-validator');
+const { validationResult} = require('express-validator');
 const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
 //const config = require('dotenv').config();
 const connectDB = require('./config/database');
-
-
 const LocalStrategy = require('passport-local').Strategy;
 const { User } = require('./models/user');
-
 const bcrypt = require('bcrypt');
 //database connection
 
@@ -46,6 +43,15 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.use(function validateRequestSchema(req,res,next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  next();
+});
+
+
 // Setting session / login 
 app.use(cookieParser('secret key'));
 
@@ -75,9 +81,9 @@ app.get('/', function (req, res) {
 });
 
 // Route Files
-//let articles = require('./routes/articles');
+let employees = require('./routes/employees');
 let users = require('./routes/users');
-//app.use('/articles', articles);
+app.use('/employees', employees);
 app.use('/users', users);
 
 // Start Server
