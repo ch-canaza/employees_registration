@@ -16,15 +16,18 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
 // Add Submit POST Route
 router.post('/add', async (req, res) => {
  try {
+  
+  // Processin Email
+  let processedSurename = req.body.surname.toLowerCase().split(' ').join('') 
   const domineCo = 'cidenet.com.co';
   const domineUs = 'cidenet.com.us';
   let id = 1;
   let generatedEmail = '';
   if (req.body.country == 'Colombia') {
-    generatedEmail = req.body.firstname.toLowerCase() + '.' + req.body.surname.toLowerCase() + '@' + domineCo; 
+    generatedEmail = req.body.firstname.toLowerCase() + '.' + processedSurename + '@' + domineCo; 
     domine = domineCo;
   } else {
-    generatedEmail = req.body.firstname.toLowerCase() + '.' + req.body.surname.toLowerCase() + '@' + domineUs 
+    generatedEmail = req.body.firstname.toLowerCase() + '.' + processedSurename + '@' + domineUs 
     domine = domineUs
   }
 
@@ -32,10 +35,39 @@ router.post('/add', async (req, res) => {
   
   while (query && query.email == generatedEmail) {
     console.log('email already exists')
-    let surnameWithtID = req.body.surname.toLowerCase() + '.' + id;
+    let surnameWithtID = processedSurename + '.' + id;
     generatedEmail = req.body.firstname.toLowerCase() + '.' + surnameWithtID + '@' + domine
     query = await Employee.findOne({ email: generatedEmail }).exec();
     id += 1;
+  }
+
+  // Processing start date
+  let currentDate = new Date(Date.now());
+  currentDateParsed = Date.parse(currentDate);
+  console.log('currentDateparsed')
+  console.log(currentDateParsed)
+  
+  let minimumAllowedDate = currentDate.setMonth(currentDate.getMonth() - 1);
+  console.log('minimumAllowedDate')
+  console.log(minimumAllowedDate)
+  
+  let userTypedDate = req.body.start_date.split('/');
+  console.log('userTypedDate')
+  console.log(userTypedDate)
+
+  let processedDate = new Date(parseInt(userTypedDate[1]) + '/' + userTypedDate[0] + '/' + userTypedDate[2]);
+  processedDateParsed = Date.parse(processedDate)
+  console.log('processedDate')
+  console.log(processedDate)
+  console.log(processedDateParsed)
+  
+  let startDate = ''
+  if (processedDateParsed <= currentDateParsed && processedDateParsed >= minimumAllowedDate) {
+    startDate = processedDate
+    console.log('startDate')
+    console.log(startDate)
+  } else {
+    res.send('invalid date format, should be: DD/MM/YYYY')
   }
   
   console.log('start saving employee')
@@ -48,7 +80,7 @@ router.post('/add', async (req, res) => {
     id_type: req.body.id_type,
     id_number: req.body.id_number,
     email: generatedEmail,
-    start_date: req.body.start_date,
+    start_date: startDate,
     area: req.body.area,
     status: req.body.status,
     register_date: req.body.register_date,

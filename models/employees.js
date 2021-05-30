@@ -60,7 +60,7 @@ const EmployeeSchema = mongoose.Schema({
 
   },
   start_date: {
-    type: String, // modificar - Date -
+    type: Date,
     required: true,
     
   },
