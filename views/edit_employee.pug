@@ -1,0 +1,57 @@
+extends layout
+
+block content
+  h1 Edit Employee
+  form(method='Post', action='/employees/edit/'+employee.id_number)
+    #form-group
+      label Surname:
+      input.form-control(name='surname', type='text', value=employee.surname)
+    #form-group
+      label Second Surname:
+      input.form-control(name='second_surname', type='text', value=employee.second_surname)
+    #form-group
+      label first Name:
+      input.form-control(name='firstname', type='text', value=employee.firstname)
+    #form-group
+      label Midle Name:
+      input.form-control(name='midlename', type='text', value=employee.midlename)
+    #form-group
+      label Country:
+      select.form-control(name='country')
+        option(value="Colombia", type='text') Colombia
+        option(value="United States", type='text') United States  
+    #form-group
+      label Id Type:
+      select.form-control(name='id_type')
+        option(value="C.C", type='text') C.C
+        option(value="C.E", type='text') C.E  
+        option(value="passport", type='text') Passport  
+        option(value="special permission", type='text') Special Permission  
+    #form-group
+      label Id Number:
+      input.form-control(name='id_number', type='text', value=employee.id_number)
+    
+    #form-group
+      label Start Date:
+      input.form-control(name='start_date', type='text', placeholder='DD/MM/YYY, you can choose a date between now and one month before ')
+    #form-group
+      label Area:
+      select.form-control(name='area')
+        option(value="Administración", type='text') Administración
+        option(value="Financiera", type='text') Financiera  
+        option(value="Compras", type='text') Compras  
+        option(value="Operación", type='text') Operación 
+        option(value="Talento Humano", type='text') Talento Humano 
+        option(value="Servicios Varios", type='text') Servicios Varios 
+        option(value="otro", type='text') Otros 
+    #form-group
+      label Status:
+       select.form-control(name='status')
+        option(value="active", type='text') Active
+    
+    //#form-group
+      label Edition Date:
+      input.form-control(name='edition_date', type='text')
+      
+    br
+    input.btn.btn-primary(type='submit',value='Submit')
