@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 const { Employee } = require('../models/employees');
 const { User } = require('../models/user');
-const { body, validationResult} = require('express-validator');
+const { body, validationResult, query} = require('express-validator');
 
 
 // Add Route
@@ -16,9 +16,18 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
 // Add Submit POST Route
 router.post('/add', async (req, res) => {
  try {
-  const domine = 'cidenet.com.co'
-  let id = 1; 
-  let generatedEmail = req.body.firstname.toLowerCase() + '.' + req.body.surname.toLowerCase() + '@' + domine 
+  const domineCo = 'cidenet.com.co';
+  const domineUs = 'cidenet.com.us';
+  let id = 1;
+  let generatedEmail = '';
+  if (req.body.country == 'Colombia') {
+    generatedEmail = req.body.firstname.toLowerCase() + '.' + req.body.surname.toLowerCase() + '@' + domineCo; 
+    domine = domineCo;
+  } else {
+    generatedEmail = req.body.firstname.toLowerCase() + '.' + req.body.surname.toLowerCase() + '@' + domineUs 
+    domine = domineUs
+  }
+
   let query = await Employee.findOne({ email: generatedEmail }).exec();
   
   while (query && query.email == generatedEmail) {
