@@ -18,13 +18,13 @@ router.post('/add', async (req, res) => {
  try {
   const domine = 'cidenet.com.co'
   let id = 1; 
-  let generatedEmail = req.body.firstname + '.' + req.body.surname + '@' + domine 
+  let generatedEmail = req.body.firstname.toLowerCase() + '.' + req.body.surname.toLowerCase() + '@' + domine 
   let query = await Employee.findOne({ email: generatedEmail }).exec();
   
   while (query && query.email == generatedEmail) {
     console.log('email already exists')
-    let surnameWithtID = req.body.surname + '.' + id;
-    generatedEmail = req.body.firstname + '.' + surnameWithtID + '@' + domine
+    let surnameWithtID = req.body.surname.toLowerCase() + '.' + id;
+    generatedEmail = req.body.firstname.toLowerCase() + '.' + surnameWithtID + '@' + domine
     query = await Employee.findOne({ email: generatedEmail }).exec();
     id += 1;
   }
