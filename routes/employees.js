@@ -17,7 +17,7 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
 router.post('/add', async (req, res) => {
  try {
   
-  // Processin Email
+  // Processing Email
   let processedSurename = req.body.surname.toLowerCase().split(' ').join('') 
   const domineCo = 'cidenet.com.co';
   const domineUs = 'cidenet.com.us';
@@ -44,31 +44,23 @@ router.post('/add', async (req, res) => {
   // Processing start date
   let currentDate = new Date(Date.now());
   currentDateParsed = Date.parse(currentDate);
-  console.log('currentDateparsed')
-  console.log(currentDateParsed)
   
   let minimumAllowedDate = currentDate.setMonth(currentDate.getMonth() - 1);
-  console.log('minimumAllowedDate')
-  console.log(minimumAllowedDate)
   
   let userTypedDate = req.body.start_date.split('/');
-  console.log('userTypedDate')
-  console.log(userTypedDate)
 
   let processedDate = new Date(parseInt(userTypedDate[1]) + '/' + userTypedDate[0] + '/' + userTypedDate[2]);
   processedDateParsed = Date.parse(processedDate)
-  console.log('processedDate')
-  console.log(processedDate)
-  console.log(processedDateParsed)
   
   let startDate = ''
   if (processedDateParsed <= currentDateParsed && processedDateParsed >= minimumAllowedDate) {
     startDate = processedDate
-    console.log('startDate')
-    console.log(startDate)
   } else {
     res.send('invalid date format, should be: DD/MM/YYYY')
   }
+
+  // Processing Register date
+  let registerDate = new Date(Date.now());
   
   console.log('start saving employee')
   let employee = await Employee.create({
@@ -83,8 +75,8 @@ router.post('/add', async (req, res) => {
     start_date: startDate,
     area: req.body.area,
     status: req.body.status,
-    register_date: req.body.register_date,
-    edition_date: 'ahoritica',
+    register_date: registerDate,
+    edition_date: registerDate,
     
   });
   employee.save();

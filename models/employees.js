@@ -75,11 +75,11 @@ const EmployeeSchema = mongoose.Schema({
     enum: ['active']
   },
   register_date: {
-    type: String,
+    type: Date,
     required: true
   },
   edition_date: {
-    type: String, //modificar - Date -
+    type: Date, 
     required: true
   },
  

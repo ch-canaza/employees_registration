@@ -37,7 +37,7 @@ block content
       
     #form-group
       label Start Date:
-      input.form-control(name='start_date', type='text', placeholder='DD/MM/YYY')
+      input.form-control(name='start_date', type='text', placeholder='DD/MM/YYY, you can choose a date between now and one month before ')
     #form-group
       label Area:
       select.form-control(name='area')
@@ -50,8 +50,9 @@ block content
         option(value="otro", type='text') Otros 
     #form-group
       label Status:
-      input.form-control(name='status', type='text')
-    #form-group
+       select.form-control(name='status')
+        option(value="active", type='text') Active
+    //#form-group
       label Register Date:
       input.form-control(name='register_date', type='text')
       
