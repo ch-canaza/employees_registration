@@ -15,10 +15,20 @@ router.get('/add', ensureAuthenticated, async (req, res) => {
 
 // Add Submit POST Route
 router.post('/add', async (req, res) => {
-  console.log('before try')
- 
  try {
-
+  const domine = 'cidenet.com.co'
+  let id = 1; 
+  let generatedEmail = req.body.firstname + '.' + req.body.surname + '@' + domine 
+  let query = await Employee.findOne({ email: generatedEmail }).exec();
+  
+  while (query && query.email == generatedEmail) {
+    console.log('email already exists')
+    let surnameWithtID = req.body.surname + '.' + id;
+    generatedEmail = req.body.firstname + '.' + surnameWithtID + '@' + domine
+    query = await Employee.findOne({ email: generatedEmail }).exec();
+    id += 1;
+  }
+  
   console.log('start saving employee')
   let employee = await Employee.create({
     surname: req.body.surname,
@@ -28,7 +38,7 @@ router.post('/add', async (req, res) => {
     country: req.body.country,
     id_type: req.body.id_type,
     id_number: req.body.id_number,
-    email: req.body.email,
+    email: generatedEmail,
     start_date: req.body.start_date,
     area: req.body.area,
     status: req.body.status,
@@ -37,12 +47,11 @@ router.post('/add', async (req, res) => {
     
   });
   employee.save();
-  //validateRequestSchema,
   req.flash('success', 'employee Added');
   res.send('employee added')
   console.log('employee added')
   console.log(employee)
-  res.redirect('/employees/add');
+  res.redirect('/');
   
   } catch (e) {
     res.send(e);
