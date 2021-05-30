@@ -36,12 +36,12 @@ const EmployeeSchema = mongoose.Schema({
   country: {
     type: String,
     required: true,
-    enum: ['Colombia', 'United Sates'],
+    enum: ['Colombia', 'United States'],
   },
   id_type: {
     type: String,
     required: true,
-    enum: ['C.C', 'C.E', 'passaport', 'special permission']
+    enum: ['C.C', 'C.E', 'passport', 'special permission']
   },
   id_number: {
     type: String,

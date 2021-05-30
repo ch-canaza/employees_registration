@@ -17,10 +17,16 @@ block content
       input.form-control(name='midlename', type='text')
     #form-group
       label Country:
-      input.form-control(name='country', type='text')
+      select.form-control(name='country')
+        option(value="Colombia", type='text') Colombia
+        option(value="United States", type='text') United States  
     #form-group
       label Id Type:
-      input.form-control(name='id_type', type='text')
+      select.form-control(name='id_type')
+        option(value="C.C", type='text') C.C
+        option(value="C.E", type='text') C.E  
+        option(value="passport", type='text') Passport  
+        option(value="special permission", type='text') Special Permission  
     #form-group
       label Id Number:
       input.form-control(name='id_number', type='text')
@@ -32,7 +38,14 @@ block content
       input.form-control(name='start_date', type='text')
     #form-group
       label Area:
-      input.form-control(name='area', type='text')
+      select.form-control(name='area')
+        option(value="Administración", type='text') Administración
+        option(value="Financiera", type='text') Financiera  
+        option(value="Compras", type='text') Compras  
+        option(value="Operación", type='text') Operación 
+        option(value="Talento Humano", type='text') Talento Humano 
+        option(value="Servicios Varios", type='text') Servicios Varios 
+        option(value="otro", type='text') Otros 
     #form-group
       label Status:
       input.form-control(name='status', type='text')
