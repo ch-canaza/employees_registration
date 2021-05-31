@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1 Employees
+  form(method='Post', action='/')
+    #form-group
+      label field to filter your search:
+      select.form-control(name='field')
+        option(value="surname", type='text') surname
+        option(value="second_surname", type='text') second surname
+        option(value="firstname", type='text') first name
+        option(value="midlename", type='text') midlename
+        option(value="id_type", type='text') id type
+        option(value="id_number", type='text') id number
+        option(value="country", type='text') country  
+        option(value="email", type='text') email  
+    #form-group
+      label Value you want to match:
+      input.form-control(name='value', type='text')
+    br
+    input.btn.btn-primary(type='submit',value='Submit')
+    br
+
+  ul.pagination.list-group
+    each employee, i in employees
+      li.list-group-item
+        p=[employee.firstname + ' ' +  employee.surname] 
+        a(href="/employees/edit" + employee.id_number)=employee.id_number
+       

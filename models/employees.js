@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 const full_name_validation = /[A-Z]+/;
 const valid_id_number = /[a-zA-Z0-9]+/;
@@ -84,5 +85,6 @@ const EmployeeSchema = mongoose.Schema({
   },
  
 });
+EmployeeSchema.plugin(mongoosePaginate);
 const Employee = mongoose.model('Employee', EmployeeSchema);
 module.exports.Employee = Employee;

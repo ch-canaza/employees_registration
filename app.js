@@ -18,7 +18,8 @@ connectDB();
 const app = express();
 
 // Bring in Models
-//let { Article } = require('./models/article');
+let { Employee } = require('./models/employees');
+
 
 // Load View Engine
 app.set('views', path.join(__dirname, 'views'));
@@ -76,8 +77,86 @@ app.get('*', function (req, res, next) {
 
 // Home Route
 app.get('/', function (req, res) {
-  res.send('al fin dentro')
-  
+  Employee.find({}, function (err, employees) {
+    if (err) {
+      console.log(err);
+    } else {
+      
+      //template response
+      const {page} = req.query.page || 1;
+      const options = {
+        page: 1,
+        limit: 5,
+      };
+      const pagEmployees = Employee.paginate({}, options).then((results, err) => {
+        if(!err){
+          console.log(results)
+          res.render('index', {
+            employees: employees,
+            testObj: results.docs, 
+            page_count: results.totalPages
+          });
+          
+          
+        } 
+
+        // json response
+        
+        /*const page = req.query.page;
+        const limit = 10;
+        const startIndex = (page - 1) * limit;
+        const endIndex = page * limit;
+        const result = employees.slice(startIndex, endIndex)
+        res.json(result);*/
+      }) 
+    } 
+  });
+    
+});
+
+app.post('/', async (req, res) => {
+  try {
+    field = req.body.field
+    value = req.body.value
+    switch (field) {
+      case 'surname':
+        query = {surname: value};
+        break;
+      case 'second_surname':
+        query = {second_surname: value};
+        break;
+      case 'firstname':
+        query = {firstname: value};
+        break;
+      case 'midlename':
+        query = {midlename: value};
+        break;
+      case 'id_type':
+        query = {id_type: value};
+        break;
+      case 'id_number':
+        query = {id_number: value};
+        break;
+      case 'country':
+        query = {country: value};
+        break;
+      case 'email':
+        query = {email: value};
+        break;
+    }
+    console.log(query)
+    const employees = await Employee.find(query);
+    if (!employee) {
+      req.flash('danger', 'Not Authorized');
+      return res.redirect('/');
+    }
+    res.render('index', {
+      employees: employees
+    });
+
+  } catch (e) {
+    res.send(e);
+  }
 });
 
 // Route Files
