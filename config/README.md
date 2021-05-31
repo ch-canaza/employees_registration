@@ -26,6 +26,8 @@ In this version was implemented the API's backend  and  and the views from where
 > npm install passport
 > npm install passport-local
 > npm install pug
+> npm install -g bower
+> bower install bootstrap-css
 
 ## Initialice App
 > clone repository: https://github.com/ch-canaza/employees_registration.git
